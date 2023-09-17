@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Product\Http\Controllers\api;
+namespace Modules\Product\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -34,14 +34,19 @@ class CategoriesController extends Controller
     public function store(Request $request)
     {
         try {
-            $newCategory = Category::create($request->all());
-            $newCategory->slug = Str::slug($request->name);
-
+            // $newCategory = Category::create($request->all());
+            // $newCategory->slug = Str::slug($request->name);
+            // $newCategory->save();
+            $newCategory = Category::create([
+                'category_id' => $request->category_id,
+                'name' => $request->name,
+                'slug' => Str::slug($request->name),
+            ]);
             return response()->json($newCategory);
         } catch (\Throwable $th) {
             return response()->json([
                 'Product categories message: ' => $th->getMessage(),
-            ], $th->getCode());
+            ], 200);
         }
     }
 

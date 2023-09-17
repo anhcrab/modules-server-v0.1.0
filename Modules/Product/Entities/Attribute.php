@@ -12,6 +12,12 @@ class Attribute extends Model
 
     protected $guard = ['id', 'created_at', 'updated_at'];
     protected $table = 'attributes';
+    protected $fillable = [
+        'id',
+        'type',
+        'name',
+        'code',
+    ];
 
     protected static function newFactory()
     {

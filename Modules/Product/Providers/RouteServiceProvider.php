@@ -24,6 +24,13 @@ class RouteServiceProvider extends ServiceProvider
     public function boot()
     {
         parent::boot();
+
+        $this->routes(function () {
+            Route::prefix('api')
+                ->middleware('api')
+                ->namespace($this->moduleNamespace)
+                ->group(module_path('Product', '/Routes/api.php'));
+        });
     }
 
     /**
@@ -61,9 +68,11 @@ class RouteServiceProvider extends ServiceProvider
      */
     protected function mapApiRoutes()
     {
-        Route::prefix('api')
-            ->middleware('api')
-            ->namespace($this->moduleNamespace)
-            ->group(module_path('Product', '/Routes/api.php'));
+        $this->routes(function () {
+            Route::prefix('api')
+                ->middleware('api')
+                ->namespace($this->moduleNamespace)
+                ->group(module_path('Product', '/Routes/api.php'));
+        });
     }
 }

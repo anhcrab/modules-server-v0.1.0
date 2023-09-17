@@ -2,5 +2,9 @@
     "Product": true,
     "Inventory": true,
     "Cart": true,
-    "User": true
+    "User": true,
+    "Order": true,
+    "Payment": true,
+    "Coupon": true,
+    "Search": true
 }

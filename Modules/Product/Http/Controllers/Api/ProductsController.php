@@ -1,11 +1,12 @@
 <?php
 
-namespace Modules\Product\Http\Controllers\api;
+namespace Modules\Product\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Str;
+use Modules\Inventory\Entities\Inventory;
 use Modules\Product\Entities\Attribute;
 use Modules\Product\Entities\Category;
 use Modules\Product\Entities\Product;
@@ -50,18 +51,23 @@ class ProductsController extends Controller
                 'category_id' => $request->category,
                 'regular_price' => $request->regular_price,
                 'sale_price' => $request->sale_price,
-                'stock_quantity' => $request->stock_quantity,
                 'total_sale' => $request->total_sale,
             ]);
-            Attribute::create([
+            Inventory::create([
                 'product_id' => $newProduct->id,
+                'quantity' => $request->stock_quantity,
+            ]);
+            $newAttribute = Attribute::where(['attribute_name' => $request->attribute_name])->firstOrCreate([
                 'type' => $request->attribute_type ? $request->attribute_type : '',
                 'name' => $request->attribute_name ? $request->attribute_name : '',
                 'code' => $request->attribute_code ? $request->attribute_code : '',
             ]);
+
+            $newProduct->attributes()->attach($newAttribute->id);
+
             // Store the image
             if ($request->hasFile('images')) {
-//                $imagePath = $request->file('images')->store('images');
+                //                $imagePath = $request->file('images')->store('images');
                 $newProduct->addMediaFromRequest('images')->toMediaCollection('images');
             }
 
@@ -71,7 +77,7 @@ class ProductsController extends Controller
         } catch (\Throwable $th) {
             return \response()->json([
                 'Products message: ' => $th->getMessage(),
-            ], $th->getCode());
+            ], 200);
         }
     }
 
@@ -139,10 +145,9 @@ class ProductsController extends Controller
             $product->category_id = Category::where('name', $request->category)->first()->id;
             $product->regular_price = $request->regular_price;
             $product->sale_price = $request->sale_price;
-            $product->stock_quantity = $request->stock_quantity;
             $product->total_sale = $request->total_sale;
+            Inventory::findOrFail($product->id)->first()->quantity = $request->stock_quantity;
             Attribute::firstOrCreate([
-                'product_id' => $product->id,
                 'type' => $request->attribute_type,
                 'name' => $request->attribute_name,
                 'code' => $request->attribute_code,
@@ -199,7 +204,6 @@ class ProductsController extends Controller
                 $product->media()->delete();
                 $product->addMediaFromRequest('images')->toMediaCollection('images');
             }
-
             return response()->json('success.');
         } catch (\Throwable $th) {
             return \response()->json([

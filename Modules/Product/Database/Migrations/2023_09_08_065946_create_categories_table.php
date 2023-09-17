@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class() extends Migration {
+return new class () extends Migration {
     /**
      * Run the migrations.
      *
@@ -14,8 +14,8 @@ return new class() extends Migration {
     {
         Schema::create('categories', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('category_id')->default(0)->constrained('categories')->cascadeOnDelete();
-            $table->string('name');
+            $table->foreignId('category_id')->default(1)->constrained('categories')->cascadeOnDelete();
+            $table->string('name')->nullable();
             $table->string('slug')->nullable();
             $table->timestamps();
         });

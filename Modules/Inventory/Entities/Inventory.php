@@ -11,6 +11,12 @@ class Inventory extends Model
     use HasFactory;
 
     protected $guard = ['id', 'created_at', 'updated_at'];
+    protected $table = 'inventories';
+    protected $fillable = [
+        'product_id',
+        'quantity',
+        'total_sale',
+    ];
 
     protected static function newFactory()
     {

@@ -12,6 +12,12 @@ class Category extends Model
 
     protected $guard = ['id', 'created_at', 'updated_at'];
     protected $table = 'categories';
+    protected $fillable = [
+        'id',
+        'category_id',
+        'name',
+        'slug',
+    ];
 
     protected static function newFactory()
     {

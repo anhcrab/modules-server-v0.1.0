@@ -10,8 +10,13 @@ class Type extends Model
 {
     use HasFactory;
 
-    protected $guard = ['id', 'created_at', 'updated_at'];
+    protected $guard = ['created_at', 'updated_at'];
     protected $table = 'types';
+    protected $fillable = [
+        'id',
+        'name',
+        'slug',
+    ];
 
     protected static function newFactory()
     {

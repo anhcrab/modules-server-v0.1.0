@@ -12,6 +12,10 @@ class Tag extends Model
 
     protected $guard = ['id', 'created_at', 'updated_at'];
     protected $table = 'tags';
+    protected $fillable = [
+        'name',
+        'slug',
+    ];
 
     protected static function newFactory()
     {

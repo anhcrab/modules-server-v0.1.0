@@ -1,10 +1,9 @@
 <?php
-
-use Illuminate\Http\Request;
+use Modules\Cart\Http\Controllers\Api\CartController;
 
 /*
 |--------------------------------------------------------------------------
-| API Routes
+| Cart Routes
 |--------------------------------------------------------------------------
 |
 | Here is where you can register API routes for your application. These
@@ -13,6 +12,11 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/cart', function (Request $request) {
-    return $request->user();
+Route::prefix('/carts')->group(function () {
+    Route::get('/{device}', [CartController::class, 'show']);
+    Route::post('/', [CartController::class, 'store']);
+    //    Route::delete('/{device}', [CartController::class, 'destroy']);
+    Route::post('/add', [CartController::class, 'addProducts']);
+    Route::post('/remove', [CartController::class, 'removeProducts']);
+    Route::post('/clear', [CartController::class, 'clearProducts']);
 });

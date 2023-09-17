@@ -51,7 +51,7 @@ class ProductServiceProvider extends ServiceProvider
             module_path($this->moduleName, 'Config/config.php') => config_path($this->moduleNameLower . '.php'),
         ], 'config');
         $this->mergeConfigFrom(
-            module_path($this->moduleName, 'Config/config.php'), $this->moduleNameLower
+            module_path($this->moduleName, 'Config/config.php'), $this->moduleNameLower,
         );
     }
 
@@ -67,7 +67,7 @@ class ProductServiceProvider extends ServiceProvider
         $sourcePath = module_path($this->moduleName, 'Resources/views');
 
         $this->publishes([
-            $sourcePath => $viewPath
+            $sourcePath => $viewPath,
         ], ['views', $this->moduleNameLower . '-module-views']);
 
         $this->loadViewsFrom(array_merge($this->getPublishableViewPaths(), [$sourcePath]), $this->moduleNameLower);
@@ -101,7 +101,7 @@ class ProductServiceProvider extends ServiceProvider
         return [];
     }
 
-    private function getPublishableViewPaths(): array
+    private function getPublishableViewPaths() : array
     {
         $paths = [];
         foreach (\Config::get('view.paths') as $path) {

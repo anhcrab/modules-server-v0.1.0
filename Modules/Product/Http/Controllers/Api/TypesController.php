@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Product\Http\Controllers\api;
+namespace Modules\Product\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -43,7 +43,7 @@ class TypesController extends Controller
         } catch (\Throwable $th) {
             return response()->json([
                 'Product types message: ' => $th->getMessage(),
-            ], $th->getCode());
+            ], 200);
         }
     }
 

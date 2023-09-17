@@ -4,6 +4,9 @@ namespace Modules\Product\Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
+use Modules\Product\Entities\Category;
+use Modules\Product\Entities\Product;
+use Modules\Product\Entities\Type;
 
 class ProductDatabaseSeeder extends Seeder
 {
