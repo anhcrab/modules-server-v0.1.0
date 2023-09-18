@@ -1,6 +1,6 @@
 <?php
+use Modules\Inventory\Http\Controllers\Api\InventoriesController;
 
-use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -12,7 +12,10 @@ use Illuminate\Http\Request;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-
-Route::middleware('auth:api')->get('/inventory', function (Request $request) {
-    return $request->user();
+Route::prefix('/inventories')->group(function () {
+    Route::get('/', [InventoriesController::class, 'index']);
+    Route::get('/{id}', [InventoriesController::class, 'show']);
+    Route::post('/', [InventoriesController::class, 'store']);
+    Route::put('/{id}', [InventoriesController::class, 'update']);
+    Route::delete('/{id}', [InventoriesController::class, 'destroy']);
 });
